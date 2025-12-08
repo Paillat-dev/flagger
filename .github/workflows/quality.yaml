@@ -33,7 +33,7 @@ jobs:
           enable-cache: "auto"
 
       - name: Install dependencies
-        run: pdm install -d
+        run: uv sync
 
       - name: ${{ matrix.name }}
         run: ${{ matrix.command }}
