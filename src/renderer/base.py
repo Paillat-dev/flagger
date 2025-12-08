@@ -233,19 +233,23 @@ class FlagRenderer:
         return new_path
 
     async def _setup_ui(self, page: playwright.async_api.Page) -> None:
-        side_panel_btn = page.locator(SITE_PANEL_BTN_XPATH)
-        await side_panel_btn.click(timeout=CLICK_TIMEOUT)
+        try:
+            side_panel_btn = page.locator(SITE_PANEL_BTN_XPATH)
+            await side_panel_btn.click(timeout=CLICK_TIMEOUT)
 
-        wind_control_btn = page.get_by_text(WIND_CONTROL_TEXT)
-        await wind_control_btn.click(timeout=CLICK_TIMEOUT)
+            wind_control_btn = page.get_by_text(WIND_CONTROL_TEXT)
+            await wind_control_btn.click(timeout=CLICK_TIMEOUT)
 
-        await side_panel_btn.click(timeout=CLICK_TIMEOUT)
+            await side_panel_btn.click(timeout=CLICK_TIMEOUT)
 
-        reset_camera_btn = page.get_by_text(RESET_CAMERA_TEXT)
-        await reset_camera_btn.click(timeout=CLICK_TIMEOUT, force=True)
+            reset_camera_btn = page.get_by_text(RESET_CAMERA_TEXT)
+            await reset_camera_btn.click(timeout=CLICK_TIMEOUT, force=True)
 
-        theater_mode_btn = page.get_by_text(THEATER_MODE_TEXT)
-        await theater_mode_btn.click(timeout=CLICK_TIMEOUT, force=True)
+            theater_mode_btn = page.get_by_text(THEATER_MODE_TEXT)
+            await theater_mode_btn.click(timeout=CLICK_TIMEOUT, force=True)
+        except playwright.async_api.TimeoutError:
+            logger.exception("Failed to setup the UI")
+            logger.debug("Page content: %s", await page.content())
 
     @asynccontextmanager
     async def render(self, flag: "Flag") -> AsyncIterator[Path]:
