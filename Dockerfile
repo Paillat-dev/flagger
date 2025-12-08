@@ -24,8 +24,6 @@ COPY src/flagwaver/package*.json ./
 RUN npm ci
 
 COPY src/flagwaver/ ./
-
-RUN sed -i 's/    controlled:                 false,/    controlled:                 true,/' src/assets/js/app/redux/modules/wind.js
 RUN npm exec gulp build
 
 FROM python:${PYTHON_VERSION}-bookworm AS app
