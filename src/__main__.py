@@ -23,7 +23,7 @@ from renderer.manager import RendererManager
 logging.basicConfig(level=logging.DEBUG)
 
 intents = Intents.default()
-app = App(intents=intents, auto_sync_commands=False)
+app = App(intents=intents, auto_sync_commands=CONFIG.auto_sync_commands)
 
 FLAGWAVER_PATH = Path(__file__).parent / "flagwaver" / "dist"
 

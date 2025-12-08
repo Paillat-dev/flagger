@@ -35,6 +35,16 @@ class FlaggerCommands(discord.Cog):
             file = discord.File(gif_path, filename=gif_path.name)
             await ctx.respond(view=FlagDisplayView(file), files=[file])
 
+    @discord.user_command(name="Create a Flag")
+    async def create_flag(self, ctx: discord.ApplicationContext, user: discord.User | discord.Member) -> None:
+        if user.display_avatar.is_animated():
+            asset = user.display_avatar.with_format("gif")
+        else:
+            asset = user.display_avatar.with_format("png")
+        await ctx.defer()
+
+        await self.handle_flag_command(ctx, asset.url)
+
     flag = discord.SlashCommandGroup("flag", "Commands related to flag rendering.")
 
     @flag.command(name="user", description="Render a user's flag.")

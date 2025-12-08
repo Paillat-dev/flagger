@@ -62,6 +62,7 @@ Set the following environment variables:
 - `FLAGGER_RENDERER_WORKERS`: Number of concurrent renderer workers (default: `2`)
 - `FLAGWAVER_HTTP_PORT`: Port for the flagwaver HTTP server (default: `8910`)
 - `UVICORN_HOST`: Host address for the Uvicorn server (default: `0.0.0.0`)
+- `AUTO_SYNC_COMMANDS`: Whether to automatically sync slash commands with Discord (default: `true`)
 
 ## Installation
 

@@ -19,6 +19,7 @@ class Config(BaseModel):
     num_workers: int = 1
     flagwaver_http_port: int = 8910
     uvicorn_host: str = "0.0.0.0"  # noqa: S104
+    auto_sync_commands: bool = True
 
 
 CONFIG = Config(
@@ -27,6 +28,7 @@ CONFIG = Config(
     num_workers=int(os.getenv("FLAGGER_RENDERER_WORKERS", "2")),
     flagwaver_http_port=int(os.getenv("FLAGWAVER_HTTP_PORT", "8910")),
     uvicorn_host=os.getenv("UVICORN_HOST", "0.0.0.0"),  # noqa: S104
+    auto_sync_commands=os.getenv("AUTO_SYNC_COMMANDS", "true") == "true",
 )
 
 __all__ = ["CONFIG"]
