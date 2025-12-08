@@ -118,5 +118,5 @@ The compose configuration includes:
 
 ## License
 
-Copyright (c) NiceBots
+Copyright (c) Paillat-dev
 SPDX-License-Identifier: MIT

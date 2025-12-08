@@ -1,4 +1,3 @@
-#file: noinspection SpellCheckingInspection
 name: CI/CD
 
 on:

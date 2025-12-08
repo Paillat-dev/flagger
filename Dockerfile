@@ -1,4 +1,4 @@
-# Copyright (c) NiceBots
+# Copyright (c) Paillat-dev
 # SPDX-License-Identifier: MIT
 
 ARG PYTHON_VERSION=3.13

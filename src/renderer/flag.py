@@ -1,4 +1,4 @@
-# Copyright (c) NiceBots
+# Copyright (c) Paillat-dev
 # SPDX-License-Identifier: MIT
 
 from dataclasses import dataclass
