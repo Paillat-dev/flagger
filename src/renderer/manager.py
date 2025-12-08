@@ -36,7 +36,12 @@ class RendererManager:
         """Start the browser and the worker tasks."""
         logger.info("Starting the browser and worker tasks")
         self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.launch()
+        self.browser = await self.playwright.chromium.launch(
+            args=[
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+            ]
+        )
         self.worker_tasks = [
             asyncio.create_task(self._worker(), name=f"worker-{i + 1}") for i in range(self.num_workers)
         ]

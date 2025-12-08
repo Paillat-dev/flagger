@@ -66,7 +66,7 @@ class FlagRenderer:
         url_params: dict[str, str],
         temp_dir: str,
         viewport: dict[str, int] | None = None,
-        device_scale_factor: int = 2,
+        device_scale_factor: int = 1,
         wait_until: str = "networkidle",
         wait_for: float = 1.0,
         wait_for_selector: str | None = None,
@@ -258,5 +258,5 @@ class FlagRenderer:
                 flag.to_url_params(),
                 temp_dir=temp_dir,
                 exec_page=self._setup_ui,
-                viewport={"width": 1280, "height": 720},
+                viewport={"width": 960, "height": 540},
             )
