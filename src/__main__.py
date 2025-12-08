@@ -10,7 +10,6 @@ sys.path.append(os.path.dirname(__file__))
 
 import asyncio
 import logging
-from pathlib import Path
 
 from discord import Intents
 from pycord_rest import App
@@ -36,13 +35,11 @@ app = App(
     default_command_integration_types={discord.IntegrationType.guild_install, discord.IntegrationType.user_install},
 )
 
-FLAGWAVER_PATH = Path(__file__).parent / "flagwaver" / "dist"
-
 
 async def main() -> None:
     async with (
         RendererManager(num_workers=CONFIG.num_workers) as manager,
-        HttpServer(port=CONFIG.flagwaver_http_port, path=FLAGWAVER_PATH),
+        HttpServer(port=CONFIG.flagwaver_http_port, path=CONFIG.flagwaver_path),
     ):
         renderer = FlagRenderer(manager, f"http://localhost:{CONFIG.flagwaver_http_port}")
         app.add_cog(FlaggerCommands(app, manager, renderer))
