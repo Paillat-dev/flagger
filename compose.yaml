@@ -1,0 +1,19 @@
+# Copyright (c) NiceBots
+# SPDX-License-Identifier: MIT
+
+services:
+  bot:
+    build: .
+    env_file:
+      - .env
+
+    restart: always
+    develop:
+      watch:
+        - path: ./src/
+          action: sync+restart
+          target: /app/
+        - path: Dockerfile
+          action: rebuild
+    ports:
+      - "8000:8000"

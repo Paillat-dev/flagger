@@ -1,0 +1,3 @@
+[submodule "src/flagwaver"]
+	path = src/flagwaver
+	url = https://github.com/krikienoid/flagwaver.git

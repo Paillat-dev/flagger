@@ -1,0 +1,71 @@
+[project]
+name = "flagger"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiofiles>=25.1.0",
+    "moviepy>=2.2.1",
+    "playwright>=1.56.0",
+    "py-cord==2.7.0rc2",
+    "pycord-rest-bot>=0.1.4",
+    "pydantic>=2.12.5",
+]
+
+[dependency-groups]
+dev = [
+    "python-dotenv>=1.2.1",
+    "ruff>=0.14.8",
+    "ty>=0.0.1a32",
+    "uv>=0.9.16",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+
+
+[tool.ruff.lint]
+select = ["ALL"]
+extend-ignore = [
+    "N999",
+    "D104",
+    "D100",
+    "D103",
+    "D102",
+    "D101",
+    "D107",
+    "D105",
+    "D106",
+    "ANN401",
+    "TRY003",
+    "EM101",
+    "EM102",
+    "G004",
+    "PTH",
+    "D211",
+    "D213",
+    "COM812",
+    "ISC001",
+    "D203",
+    "FBT001",
+    "FBT002",
+    "PLR2004",
+    "PLR0913",
+    "C901",
+]
+pydocstyle.convention = "google"
+
+[tool.ty.rules]
+unused-ignore-comment = "warn"
