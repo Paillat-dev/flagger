@@ -4,6 +4,8 @@
 import os
 import sys
 
+import discord
+
 sys.path.append(os.path.dirname(__file__))
 
 import asyncio
@@ -23,7 +25,16 @@ from renderer.manager import RendererManager
 logging.basicConfig(level=logging.DEBUG)
 
 intents = Intents.default()
-app = App(intents=intents, auto_sync_commands=CONFIG.auto_sync_commands)
+app = App(
+    intents=intents,
+    auto_sync_commands=CONFIG.auto_sync_commands,
+    default_command_contexts={
+        discord.InteractionContextType.guild,
+        discord.InteractionContextType.bot_dm,
+        discord.InteractionContextType.private_channel,
+    },
+    default_command_integration_types={discord.IntegrationType.guild_install, discord.IntegrationType.user_install},
+)
 
 FLAGWAVER_PATH = Path(__file__).parent / "flagwaver" / "dist"
 
