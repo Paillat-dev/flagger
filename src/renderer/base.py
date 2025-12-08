@@ -31,6 +31,8 @@ BOUND_MARGIN_PERCENT: float = 0.35  # Margin for sides and top
 BOUND_MARGIN_BOTTOM_PERCENT: float = 0.5  # Extra margin for bottom (flagpole)
 AUTO_CROP_THRESHOLD = 0.02
 
+CLICK_TIMEOUT: float = 4 * 1000
+
 LOAD_TIME_BONUS: float = +0.6
 
 FILE_BUTTON_XPATH: str = (
@@ -232,18 +234,18 @@ class FlagRenderer:
 
     async def _setup_ui(self, page: playwright.async_api.Page) -> None:
         side_panel_btn = page.locator(SITE_PANEL_BTN_XPATH)
-        await side_panel_btn.click(timeout=2 * 1000)
+        await side_panel_btn.click(timeout=CLICK_TIMEOUT)
 
         wind_control_btn = page.get_by_text(WIND_CONTROL_TEXT)
-        await wind_control_btn.click(timeout=2 * 1000)
+        await wind_control_btn.click(timeout=CLICK_TIMEOUT)
 
-        await side_panel_btn.click(timeout=2 * 1000)
+        await side_panel_btn.click(timeout=CLICK_TIMEOUT)
 
         reset_camera_btn = page.get_by_text(RESET_CAMERA_TEXT)
-        await reset_camera_btn.click(timeout=2 * 1000, force=True)
+        await reset_camera_btn.click(timeout=CLICK_TIMEOUT, force=True)
 
         theater_mode_btn = page.get_by_text(THEATER_MODE_TEXT)
-        await theater_mode_btn.click(timeout=2 * 1000, force=True)
+        await theater_mode_btn.click(timeout=CLICK_TIMEOUT, force=True)
 
     @asynccontextmanager
     async def render(self, flag: "Flag") -> AsyncIterator[Path]:
