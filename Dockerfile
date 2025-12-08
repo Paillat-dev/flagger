@@ -43,6 +43,8 @@ RUN pip install $(grep '^playwright==' requirements.txt | tr -d '\\') && playwri
 RUN pip install -r requirements.txt
 
 COPY --from=node-base --chown=appuser /app/dist/ ./src/static/flagwaver
+ENV FLAGWAVER_PATH=/app/src/static/flagwaver
+
 COPY src/ ./src
 USER appuser
 
