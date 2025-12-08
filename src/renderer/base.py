@@ -121,7 +121,7 @@ class FlagRenderer:
         video_path = await page.video.path()  # ty:ignore[possibly-missing-attribute]
         return await asyncio.to_thread(self._manipulate_video, Path(video_path), trim_time=load_time)
 
-    def _detect_flag_bounds(self, frame: np.ndarray, tolerance: int = 60) -> tuple[int, int, int, int]:
+    def _detect_flag_bounds(self, frame: np.ndarray, tolerance: int = 35) -> tuple[int, int, int, int]:
         """Detect the flag boundaries in a frame by scanning for non-greenscreen pixels.
 
         Args:
