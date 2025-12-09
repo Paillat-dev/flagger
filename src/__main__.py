@@ -21,7 +21,7 @@ from http_server import HttpServer
 from renderer.base import FlagRenderer
 from renderer.manager import RendererManager
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=getattr(logging, CONFIG.log_level.upper()))
 
 intents = Intents.default()
 app = App(

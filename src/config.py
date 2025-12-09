@@ -22,6 +22,7 @@ class Config(BaseModel):
     uvicorn_host: str = "0.0.0.0"  # noqa: S104
     auto_sync_commands: bool = True
     flagwaver_path: Path
+    log_level: str = "INFO"
 
 
 CONFIG = Config(
@@ -32,6 +33,7 @@ CONFIG = Config(
     uvicorn_host=os.getenv("UVICORN_HOST", "0.0.0.0"),  # noqa: S104
     auto_sync_commands=os.getenv("AUTO_SYNC_COMMANDS", "true") == "true",
     flagwaver_path=Path(os.getenv("FLAGWAVER_PATH", Path(__file__).parent / "flagwaver" / "dist")),
+    log_level=os.getenv("LOG_LEVEL", "INFO"),
 )
 
 __all__ = ["CONFIG"]
