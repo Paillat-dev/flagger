@@ -6,10 +6,10 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "aiofiles>=25.1.0",
-    "discord-progress-bar>=0.1.0",
+    "discord-progress-bar>=0.1.2",
     "moviepy>=2.2.1",
     "playwright>=1.56.0",
-    "py-cord==2.7.0rc2",
+    "py-cord>=2.7.0rc2",
     "pycord-rest-bot>=0.2.0",
     "pydantic>=2.12.5",
 ]

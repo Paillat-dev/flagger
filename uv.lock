@@ -239,16 +239,16 @@ wheels = [
 
 [[package]]
 name = "discord-progress-bar"
-version = "0.1.0"
+version = "0.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofile" },
     { name = "aiohttp" },
     { name = "py-cord" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/87/0d9b6147d9a0a33a6ad314373990aa50b351e3084db6ad209aba7465051a/discord_progress_bar-0.1.0.tar.gz", hash = "sha256:48e751f8b0e39ac8b131a0207c3b1a8cd2bcfe937d837b44f9d6b10070b48d17", size = 9214, upload-time = "2025-12-10T13:36:10.358Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f0/3d/1301b2ec1a983602e2260f78e865f42e1a3912e22c393adf23b547e59504/discord_progress_bar-0.1.2.tar.gz", hash = "sha256:e3d11828a63378c98683b9d06863f1d8890749630657bb7be1b7cefeea79b2db", size = 9229, upload-time = "2025-12-10T15:38:10.321Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/4e/b6a06c681197dcff08962befc181de9521b4e3885f5c26a040eb114e79af/discord_progress_bar-0.1.0-py3-none-any.whl", hash = "sha256:520c5cd77354469eeed6f1521ec9d1725833f58e9abcd7478603ad7082ad5e7c", size = 9096, upload-time = "2025-12-10T13:36:11.373Z" },
+    { url = "https://files.pythonhosted.org/packages/1a/b4/38371fc553036c8359f891d7d653460eda504602569e26ac7bf99f952e6c/discord_progress_bar-0.1.2-py3-none-any.whl", hash = "sha256:c4034dbb598063350a9ee10d05c087147592622538b51e0648152190ae3c181b", size = 9103, upload-time = "2025-12-10T15:38:09.116Z" },
 ]
 
 [[package]]
@@ -291,10 +291,10 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=25.1.0" },
-    { name = "discord-progress-bar", specifier = ">=0.1.0" },
+    { name = "discord-progress-bar", specifier = ">=0.1.2" },
     { name = "moviepy", specifier = ">=2.2.1" },
     { name = "playwright", specifier = ">=1.56.0" },
-    { name = "py-cord", specifier = "==2.7.0rc2" },
+    { name = "py-cord", specifier = ">=2.7.0rc2" },
     { name = "pycord-rest-bot", specifier = ">=0.2.0" },
     { name = "pydantic", specifier = ">=2.12.5" },
 ]
