@@ -63,6 +63,10 @@ Set the following environment variables:
 - `FLAGWAVER_HTTP_PORT`: Port for the flagwaver HTTP server (default: `8910`)
 - `UVICORN_HOST`: Host address for the Uvicorn server (default: `0.0.0.0`)
 - `AUTO_SYNC_COMMANDS`: Whether to automatically sync slash commands with Discord (default: `true`)
+- `FLAGWAVER_PATH`: Path to the flagwaver distribution directory (default: `src/flagwaver/dist`)
+- `LOG_LEVEL`: Logging level for the application (default: `INFO`)
+- `COOLDOWN_RATE`: Number of command uses allowed per cooldown period (default: `1`)
+- `COOLDOWN_PER`: Cooldown period in seconds (default: `900`, i.e., 15 minutes)
 
 ## Installation
 

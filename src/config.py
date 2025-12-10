@@ -23,6 +23,8 @@ class Config(BaseModel):
     auto_sync_commands: bool = True
     flagwaver_path: Path
     log_level: str = "INFO"
+    cooldown_rate: int
+    cooldown_per: float
 
 
 CONFIG = Config(
@@ -34,6 +36,8 @@ CONFIG = Config(
     auto_sync_commands=os.getenv("AUTO_SYNC_COMMANDS", "true") == "true",
     flagwaver_path=Path(os.getenv("FLAGWAVER_PATH", Path(__file__).parent / "flagwaver" / "dist")),
     log_level=os.getenv("LOG_LEVEL", "INFO"),
+    cooldown_rate=int(os.getenv("COOLDOWN_RATE", "1")),  # 1 per
+    cooldown_per=float(os.getenv("COOLDOWN_PER", "900")),  # 15 minutes
 )
 
 __all__ = ["CONFIG"]
