@@ -2,6 +2,8 @@
 
 A Discord HTTP bot for flag animation rendering.
 
+<img src="/art/custom_flag.png" width="500" center alt="Custom Flag Example"/>
+
 ## Core Components
 
 This project integrates [flagwaver](https://github.com/krikienoid/flagwaver) as a git submodule (`src/flagwaver`), which serves as the core rendering engine for flag animations. Credit to the flagwaver project for providing the visualization component.
