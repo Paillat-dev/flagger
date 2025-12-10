@@ -33,6 +33,7 @@ app = App(
         discord.InteractionContextType.private_channel,
     },
     default_command_integration_types={discord.IntegrationType.guild_install, discord.IntegrationType.user_install},
+    cache_app_emojis=True,
 )
 
 

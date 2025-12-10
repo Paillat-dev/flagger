@@ -16,6 +16,7 @@ import playwright.async_api
 from aiofiles import tempfile
 
 from .manager import RendererManager
+from .progress import LoadingStep, ProgressReporter
 
 if TYPE_CHECKING:
     from .flag import Flag
@@ -72,6 +73,7 @@ class FlagRenderer:
         wait_for_selector: str | None = None,
         duration: float = 6.0,
         exec_page: Callable[[playwright.async_api.Page], Coroutine[None, None, None]] | None = None,
+        progress_reporter: ProgressReporter | None = None,
     ) -> Path:
         """Render the HTML content to a gif and return the gif path.
 
@@ -85,6 +87,7 @@ class FlagRenderer:
             wait_for_selector: The CSS selector to wait for before rendering.$
             duration: The duration of the video to capture.
             exec_page: A coroutine to execute on the page before rendering.
+            progress_reporter: An optional progress reporter to report loading steps.
 
         Returns:
             The path to the rendered gif.
@@ -92,6 +95,11 @@ class FlagRenderer:
         """
         if not self.renderer_manager.browser:
             raise RuntimeError("Browser has not been initialized. Call 'start()' on RendererManager first.")
+
+        if progress_reporter:
+            await progress_reporter.report_step(
+                LoadingStep("Initializing", "Creating browser context for rendering", 0.10)
+            )
 
         context = await self.renderer_manager.browser.new_context(
             viewport=viewport,  # ty:ignore[invalid-argument-type]
@@ -103,14 +111,25 @@ class FlagRenderer:
         try:
             page = await context.new_page()
             try:
+                if progress_reporter:
+                    await progress_reporter.report_step(LoadingStep("Loading", "Loading flagwaver page", 0.25))
+
                 encoded_url_params = urllib.parse.urlencode(url_params)
                 await page.goto(f"{self.flagwaver_url}?{encoded_url_params}", wait_until=wait_until)  # ty:ignore[invalid-argument-type]
                 if wait_for_selector:
                     await page.wait_for_selector(wait_for_selector, timeout=5000)
 
                 await page.wait_for_timeout(wait_for)
+
+                if progress_reporter:
+                    await progress_reporter.report_step(LoadingStep("Setting Up", "Configuring UI controls", 0.40))
+
                 if exec_page:
                     await exec_page(page)
+
+                if progress_reporter:
+                    await progress_reporter.report_step(LoadingStep("Recording", "Capturing flag animation", 0.60))
+
                 load_time = (time.time() - start_time) + LOAD_TIME_BONUS
                 logger.debug(f"Page loaded in {load_time:.2f} seconds")
                 await asyncio.sleep(duration + LOAD_TIME_BONUS)
@@ -118,8 +137,19 @@ class FlagRenderer:
                 await page.close()
         finally:
             await context.close()
+
+        if progress_reporter:
+            await progress_reporter.report_step(
+                LoadingStep("Processing", "Detecting flag bounds and converting to GIF", 0.75)
+            )
+
         video_path = await page.video.path()  # ty:ignore[possibly-missing-attribute]
-        return await asyncio.to_thread(self._manipulate_video, Path(video_path), trim_time=load_time)
+        result = await asyncio.to_thread(self._manipulate_video, Path(video_path), trim_time=load_time)
+
+        if progress_reporter:
+            await progress_reporter.report_step(LoadingStep("Complete", "Flag ready!", 1.0))
+
+        return result
 
     def _detect_flag_bounds(self, frame: np.ndarray, tolerance: int = 35) -> tuple[int, int, int, int]:
         """Detect the flag boundaries in a frame by scanning for non-greenscreen pixels.
@@ -252,11 +282,12 @@ class FlagRenderer:
             logger.debug("Page content: %s", await page.content())
 
     @asynccontextmanager
-    async def render(self, flag: "Flag") -> AsyncIterator[Path]:
+    async def render(self, flag: "Flag", progress_reporter: ProgressReporter | None = None) -> AsyncIterator[Path]:
         async with tempfile.TemporaryDirectory() as temp_dir:
             yield await self._render_url_to_video(
                 flag.to_url_params(),
                 temp_dir=temp_dir,
                 exec_page=self._setup_ui,
                 viewport={"width": 960, "height": 540},
+                progress_reporter=progress_reporter,
             )
