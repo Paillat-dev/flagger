@@ -1,11 +1,13 @@
 # Copyright (c) Paillat-dev
 # SPDX-License-Identifier: MIT
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 import discord
 from discord import ui
+from discord.ext.commands import BucketType, cooldown
 
+from config import CONFIG
 from renderer.flag import Flag
 
 if TYPE_CHECKING:
@@ -13,6 +15,12 @@ if TYPE_CHECKING:
 
     from renderer.base import FlagRenderer
     from renderer.manager import RendererManager
+
+COOLDOWN_ARGS: Final = {
+    "rate": CONFIG.cooldown_rate,
+    "per": CONFIG.cooldown_per,
+    "type": BucketType.user,
+}
 
 
 class FlagDisplayView(ui.DesignerView):
@@ -36,6 +44,7 @@ class FlaggerCommands(discord.Cog):
             await ctx.respond(view=FlagDisplayView(file), files=[file])
 
     @discord.user_command(name="Create a Flag")
+    @cooldown(**COOLDOWN_ARGS)  # ty:ignore[invalid-argument-type]
     async def create_flag(self, ctx: discord.ApplicationContext, user: discord.User | discord.Member) -> None:
         if user.display_avatar.is_animated():
             asset = user.display_avatar.with_format("gif")
@@ -48,6 +57,7 @@ class FlaggerCommands(discord.Cog):
     flag = discord.SlashCommandGroup("flag", "Commands related to flag rendering.")
 
     @flag.command(name="user", description="Render a user's flag.")
+    @cooldown(**COOLDOWN_ARGS)  # ty:ignore[invalid-argument-type]
     async def user(self, ctx: discord.ApplicationContext, user: discord.Member | None = None) -> None:
         target = user or ctx.author
         if target.display_avatar.is_animated():
@@ -59,6 +69,7 @@ class FlaggerCommands(discord.Cog):
         await self.handle_flag_command(ctx, asset.url)
 
     @flag.command(name="custom", description="Render a custom flag from an image attachment.")
+    @cooldown(**COOLDOWN_ARGS)  # ty:ignore[invalid-argument-type]
     async def custom_flag(self, ctx: discord.ApplicationContext, attachment: discord.Attachment) -> None:
         if not attachment.content_type or not attachment.content_type.startswith("image/"):
             await ctx.respond("Please provide a valid image attachment.", ephemeral=True)
