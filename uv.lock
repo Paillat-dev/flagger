@@ -3,6 +3,18 @@ revision = 3
 requires-python = ">=3.13"
 
 [[package]]
+name = "aiofile"
+version = "3.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "caio" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/67/e2/d7cb819de8df6b5c1968a2756c3cb4122d4fa2b8fc768b53b7c9e5edb646/aiofile-3.9.0.tar.gz", hash = "sha256:e5ad718bb148b265b6df1b3752c4d1d83024b93da9bd599df74b9d9ffcf7919b", size = 17943, upload-time = "2024-10-08T10:39:35.846Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/50/25/da1f0b4dd970e52bf5a36c204c107e11a0c6d3ed195eba0bfbc664c312b2/aiofile-3.9.0-py3-none-any.whl", hash = "sha256:ce2f6c1571538cbdfa0143b04e16b208ecb0e9cb4148e528af8a640ed51cc8aa", size = 19539, upload-time = "2024-10-08T10:39:32.955Z" },
+]
+
+[[package]]
 name = "aiofiles"
 version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -140,6 +152,17 @@ wheels = [
 ]
 
 [[package]]
+name = "caio"
+version = "0.9.24"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/04/ec9b6864135032fd454f6cd1d9444e0bb01040196ad0cd776c061fc92c6b/caio-0.9.24.tar.gz", hash = "sha256:5bcdecaea02a9aa8e3acf0364eff8ad9903d57d70cdb274a42270126290a77f1", size = 27174, upload-time = "2025-04-23T16:31:19.191Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/66/35/06e77837fc5455d330c5502460fc3743989d4ff840b61aa79af3a7ec5b19/caio-0.9.24-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:1d47ef8d76aca74c17cb07339a441c5530fc4b8dd9222dfb1e1abd7f9f9b814f", size = 42214, upload-time = "2025-04-23T16:31:12.272Z" },
+    { url = "https://files.pythonhosted.org/packages/e0/e2/c16aeaea4b2103e04fdc2e7088ede6313e1971704c87fcd681b58ab1c6b4/caio-0.9.24-cp313-cp313-manylinux_2_34_aarch64.whl", hash = "sha256:d15fc746c4bf0077d75df05939d1e97c07ccaa8e580681a77021d6929f65d9f4", size = 81557, upload-time = "2025-04-23T16:31:13.526Z" },
+    { url = "https://files.pythonhosted.org/packages/78/3b/adeb0cffe98dbe60661f316ec0060037a5209a5ed8be38ac8e79fdbc856d/caio-0.9.24-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:9368eae0a9badd5f31264896c51b47431d96c0d46f1979018fb1d20c49f56156", size = 80242, upload-time = "2025-04-23T16:31:14.365Z" },
+]
+
+[[package]]
 name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -215,6 +238,20 @@ wheels = [
 ]
 
 [[package]]
+name = "discord-progress-bar"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiofile" },
+    { name = "aiohttp" },
+    { name = "py-cord" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cc/87/0d9b6147d9a0a33a6ad314373990aa50b351e3084db6ad209aba7465051a/discord_progress_bar-0.1.0.tar.gz", hash = "sha256:48e751f8b0e39ac8b131a0207c3b1a8cd2bcfe937d837b44f9d6b10070b48d17", size = 9214, upload-time = "2025-12-10T13:36:10.358Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/81/4e/b6a06c681197dcff08962befc181de9521b4e3885f5c26a040eb114e79af/discord_progress_bar-0.1.0-py3-none-any.whl", hash = "sha256:520c5cd77354469eeed6f1521ec9d1725833f58e9abcd7478603ad7082ad5e7c", size = 9096, upload-time = "2025-12-10T13:36:11.373Z" },
+]
+
+[[package]]
 name = "fastapi"
 version = "0.124.2"
 source = { registry = "https://pypi.org/simple" }
@@ -235,6 +272,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiofiles" },
+    { name = "discord-progress-bar" },
     { name = "moviepy" },
     { name = "playwright" },
     { name = "py-cord" },
@@ -253,10 +291,11 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=25.1.0" },
+    { name = "discord-progress-bar", specifier = ">=0.1.0" },
     { name = "moviepy", specifier = ">=2.2.1" },
     { name = "playwright", specifier = ">=1.56.0" },
     { name = "py-cord", specifier = "==2.7.0rc2" },
-    { name = "pycord-rest-bot", specifier = ">=0.1.4" },
+    { name = "pycord-rest-bot", specifier = ">=0.2.0" },
     { name = "pydantic", specifier = ">=2.12.5" },
 ]
 
@@ -776,7 +815,7 @@ wheels = [
 
 [[package]]
 name = "pycord-rest-bot"
-version = "0.1.4"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fastapi" },
@@ -785,9 +824,9 @@ dependencies = [
     { name = "pynacl" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/90/de/e3c06a16f17ed9400cbdd0177e3561281e3443db15ace8710a39da70fcda/pycord_rest_bot-0.1.4.tar.gz", hash = "sha256:3669fcdaba1275b6fdce24c4b1ac3fac2e3f1cef0100254ad9d6a1ace8c9d107", size = 10965, upload-time = "2025-12-08T18:11:51.386Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a8/66/c021f12026213f392bf3468e2c6f0fb5c2369af36e182fe6e0a6e76790ba/pycord_rest_bot-0.2.0.tar.gz", hash = "sha256:3a6796f103d910e99a0a2d6f7b718a089ea00dfa8d87eec9b29200c7a0894c23", size = 11012, upload-time = "2025-12-10T14:57:40.439Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4b/36/0d3f7fb65caf02aa7da28e48b47266918a316ff52048843a24ea66c856b2/pycord_rest_bot-0.1.4-py3-none-any.whl", hash = "sha256:7ae0c997e1d8234d2195da6b5d922cec27aa9170ba184d5acc475b1bade24e8f", size = 10619, upload-time = "2025-12-08T18:11:52.102Z" },
+    { url = "https://files.pythonhosted.org/packages/f8/a0/f324d057f00e530d6bfeb8c1840beaf7018646fd4c989c6bd3e6d4796def/pycord_rest_bot-0.2.0-py3-none-any.whl", hash = "sha256:ea4f8370333e0568e1148fffbd56684be8c3c56cb5a52723bab618934d084dfd", size = 10667, upload-time = "2025-12-10T14:57:39.668Z" },
 ]
 
 [[package]]

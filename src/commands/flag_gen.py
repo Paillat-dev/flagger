@@ -1,14 +1,15 @@
 # Copyright (c) Paillat-dev
 # SPDX-License-Identifier: MIT
-
 from typing import TYPE_CHECKING, Final
 
 import discord
 from discord import ui
 from discord.ext.commands import BucketType, cooldown
+from discord_progress_bar import ProgressBar, ProgressBarManager
 
 from config import CONFIG
 from renderer.flag import Flag
+from renderer.progress import LoadingStep, ProgressReporter
 
 if TYPE_CHECKING:
     from pycord_rest import App
@@ -31,17 +32,62 @@ class FlagDisplayView(ui.DesignerView):
         super().__init__(container, store=False)
 
 
+class LoadingProgressView(ui.DesignerView):
+    def __init__(self, progress_bar: ProgressBar, step: LoadingStep) -> None:
+        container = ui.Container()
+        container.add_text(f"## {step.step_name}")
+        container.add_text(f"{step.description}")
+        container.add_text(progress_bar.partial(step.progress))
+        super().__init__(container, store=False)
+
+
+class DiscordProgressReporter(ProgressReporter):
+    def __init__(self, ctx: discord.ApplicationContext, progress_bar: ProgressBar) -> None:
+        self.ctx = ctx
+        self.progress_bar = progress_bar
+
+    async def report_step(self, step: LoadingStep) -> None:
+        view = LoadingProgressView(self.progress_bar, step)
+        await self.ctx.edit(view=view)
+
+
 class FlaggerCommands(discord.Cog):
     def __init__(self, app: "App", manager: "RendererManager", renderer: "FlagRenderer") -> None:
         self.app: App = app
         self.manager: RendererManager = manager
         self.renderer: FlagRenderer = renderer
+        self.progress_manager: ProgressBarManager = ProgressBarManager(app)
+        self._progress_bar: ProgressBar | None = None
         super().__init__()
 
+    @discord.Cog.listener(once=True)
+    async def on_connect(self) -> None:
+        if self.app._connection.cache_app_emojis and self.app._connection.application_id:  # noqa: SLF001
+            data = await self.app._connection.http.get_all_application_emojis(self.app._connection.application_id)  # noqa: SLF001
+            for e in data.get("items", []):  # ty:ignore[unresolved-attribute]
+                self.app._connection.maybe_store_app_emoji(self.app._connection.application_id, e)  # noqa: SLF001
+        await self.progress_manager.load()
+        self._progress_bar = await self.progress_manager.progress_bar("green", length=10)
+
+    @property
+    def progress_bar(self) -> ProgressBar:
+        if self._progress_bar is None:
+            raise RuntimeError("Progress bar manager not loaded yet.")
+        return self._progress_bar
+
     async def handle_flag_command(self, ctx: discord.ApplicationContext, image_url: str) -> None:
-        async with self.manager.render_context_manager(self.renderer.render, Flag(image_url)) as gif_path:  # ty: ignore[invalid-argument-type]
-            file = discord.File(gif_path, filename=gif_path.name)  # ty:ignore[invalid-argument-type, unresolved-attribute]
-            await ctx.respond(view=FlagDisplayView(file), files=[file])
+        initial_view = LoadingProgressView(self.progress_bar, LoadingStep("Queued", "Waiting to start rendering", 0.0))
+        await ctx.respond(view=initial_view)
+
+        reporter = DiscordProgressReporter(ctx, self.progress_bar)
+
+        async with self.manager.render_context_manager(
+            self.renderer.render,  # ty: ignore[invalid-argument-type]
+            Flag(image_url),  # ty: ignore[invalid-argument-type]
+            progress_reporter=reporter,  # ty: ignore[invalid-argument-type]
+        ) as gif_path:
+            file = discord.File(gif_path, filename=gif_path.name)  # ty:ignore[unresolved-attribute, invalid-argument-type]
+            await ctx.edit(view=FlagDisplayView(file), files=[file])
 
     @discord.user_command(name="Create a Flag")
     @cooldown(**COOLDOWN_ARGS)  # ty:ignore[invalid-argument-type]
