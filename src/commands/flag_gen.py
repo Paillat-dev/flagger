@@ -40,7 +40,7 @@ class FlaggerCommands(discord.Cog):
 
     async def handle_flag_command(self, ctx: discord.ApplicationContext, image_url: str) -> None:
         async with self.manager.render_context_manager(self.renderer.render, Flag(image_url)) as gif_path:  # ty: ignore[invalid-argument-type]
-            file = discord.File(gif_path, filename=gif_path.name)
+            file = discord.File(gif_path, filename=gif_path.name)  # ty:ignore[invalid-argument-type, unresolved-attribute]
             await ctx.respond(view=FlagDisplayView(file), files=[file])
 
     @discord.user_command(name="Create a Flag")
