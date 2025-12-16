@@ -234,7 +234,7 @@ class FlagRenderer:
         return x_min, y_min, x_max, y_max
 
     def _manipulate_video(self, path: Path, trim_time: float) -> Path:
-        new_path = path.parent / f"{path.stem}_cropped.gif"
+        new_path = path.parent / f"{path.stem}_cropped.webp"
 
         clip = moviepy.VideoFileClip(path)
         if trim_time >= clip.duration:
@@ -258,7 +258,23 @@ class FlagRenderer:
         clip = clip.with_effects([crop])
 
         clip = clip[trim_time:]
-        clip.write_gif(new_path)
+        clip.write_videofile(
+            new_path,
+            codec="libwebp",
+            fps=clip.fps or 24,
+            audio=False,
+            preset="picture",
+            ffmpeg_params=[
+                "-loop",
+                "0",
+                "-lossless",
+                "1",
+                "-compression_level",
+                "6",
+                "-pix_fmt",
+                "yuva420p",
+            ],
+        )
         logger.debug(f"Cropped video with transparency to {new_path}")
         return new_path
 
