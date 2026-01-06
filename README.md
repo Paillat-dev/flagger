@@ -1,6 +1,6 @@
 # Flagger
 
-A Discord HTTP bot for flag animation rendering.
+A Discord HTTP bot for flag animation rendering. This is my participation to the 2025 Discord Developers Buildathon.
 
 <img src="/art/custom_flag.png" width="500" center alt="Custom Flag Example"/>
 
@@ -10,8 +10,8 @@ This project integrates [flagwaver](https://github.com/krikienoid/flagwaver) as 
 
 ## Technology Stack
 
-- **py-cord** (v2.7.0rc2): Discord API wrapper
-- **pycord-rest** ([Paillat-dev/pycord-rest](https://github.com/Paillat-dev/pycord-rest)): rest bot implementation for py-cord
+- **py-cord**: Discord API wrapper
+- **pycord-rest** ([Paillat-dev/pycord-rest](https://github.com/Paillat-dev/pycord-rest)): rest (http interactions) bot implementation for py-cord
 - **Playwright**: Browser automation for rendering
 - **MoviePy**: Video processing
 - **Pydantic**: Configuration and data validation
@@ -48,7 +48,7 @@ uv run ty check .
 
 ### Code Standards
 
-All code is strictly typed and must pass type checking. The project enforces comprehensive linting rules with select exceptions defined in `pyproject.toml`.
+All code is strictly typed and must pass type checking. The project enforces comprehensive linting rules with select exceptions defined in `pyproject.toml`. Any pull request must pass all checks before merging.
 
 ## Configuration
 
@@ -98,6 +98,18 @@ uv run python -m src
 
 The project includes a `Dockerfile` for containerized deployment and `compose.yaml` for local development.
 
+### Using the pre-built Docker image
+
+Pull the latest image:
+```bash
+docker pull ghcr.io/paillat-dev/flagger:master
+```
+
+Run the container:
+```bash
+docker run --env-file .env ghcr.io/paillat-dev/flagger:master
+```
+
 ### Building and Running with Docker
 
 Build the image:
@@ -107,7 +119,7 @@ docker build -t flagger .
 
 Run the container:
 ```bash
-docker run --env-file .env -p 8000:8000 flagger
+docker run --env-file .env flagger
 ```
 
 ### Local Development with Docker Compose
@@ -121,7 +133,6 @@ The compose configuration includes:
 - Automatic restart on source code changes in `src/`
 - Image rebuild on Dockerfile changes
 - Environment variable loading from `.env` file
-- Port mapping for the HTTP server
 
 ## License
 
