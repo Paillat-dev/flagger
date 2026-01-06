@@ -134,6 +134,8 @@ The compose configuration includes:
 - Image rebuild on Dockerfile changes
 - Environment variable loading from `.env` file
 
+When developing locally, you will most likely need to use a service like [ngrok](https://ngrok.com/) to expose your local server to the internet for Discord interactions.
+
 ## License
 
 Copyright (c) Paillat-dev
