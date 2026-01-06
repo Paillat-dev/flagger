@@ -140,7 +140,7 @@ class FlagRenderer:
 
         if progress_reporter:
             await progress_reporter.report_step(
-                LoadingStep("Processing", "Detecting flag bounds and converting to GIF", 0.75)
+                LoadingStep("Processing", "Detecting flag bounds and converting to WEBP", 0.75)
             )
 
         video_path = await page.video.path()  # ty:ignore[possibly-missing-attribute]
