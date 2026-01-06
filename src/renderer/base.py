@@ -304,6 +304,6 @@ class FlagRenderer:
                 flag.to_url_params(),
                 temp_dir=temp_dir,
                 exec_page=self._setup_ui,
-                viewport={"width": 960, "height": 540},
+                viewport={"width": 1080, "height": 720},
                 progress_reporter=progress_reporter,
             )
