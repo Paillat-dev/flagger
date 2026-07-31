@@ -1,5 +1,5 @@
-# Copyright (c) Paillat-dev
 # SPDX-License-Identifier: MIT
+# Copyright: 2025-2026 Paillat-dev
 from typing import TYPE_CHECKING, Final
 
 import discord

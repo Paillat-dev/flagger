@@ -1,5 +1,4 @@
-# Copyright (c) Paillat-dev
-# SPDX-License-Identifier: MIT
+
 
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=20

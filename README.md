@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: MIT
+Copyright: 2025-2026 Paillat-dev
+-->
 # Flagger
 
 A Discord HTTP bot for flag animation rendering. This is my participation to the 2025 Discord Developers Buildathon.

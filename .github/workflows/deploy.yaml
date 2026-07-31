@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Copyright: 2025-2026 Paillat-dev
 name: Call Endpoint
 
 on: workflow_call
