@@ -296,7 +296,7 @@ requires-dist = [
     { name = "discord-progress-bar", specifier = ">=0.1.2" },
     { name = "moviepy", specifier = ">=2.2.1" },
     { name = "playwright", specifier = ">=1.56.0" },
-    { name = "py-cord", specifier = ">=2.7.0rc2" },
+    { name = "py-cord", specifier = ">=2.7.0" },
     { name = "pycord-rest-bot", specifier = ">=0.2.0" },
     { name = "pydantic", specifier = ">=2.12.5" },
 ]
@@ -305,7 +305,7 @@ requires-dist = [
 dev = [
     { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "ruff", specifier = ">=0.14.8" },
-    { name = "ty", specifier = ">=0.0.1a32" },
+    { name = "ty", specifier = ">=0.0.9" },
     { name = "uv", specifier = ">=0.9.16" },
 ]
 
